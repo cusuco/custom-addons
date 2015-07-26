@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!-- Action to open to-do task list -->
+        <act_window id='action_todo_task'
+            name='To-do Task'
+            res_model='todo.task'
+            view_mode='tree,form'></act_window>
+
+        <!-- Menu item to open todo task list -->
+        <menuitem id='menu_todo_task'
+            name='To-Do Task'
+            parent='mail.mail_feeds'
+            sequence='20'
+            action='action_todo_task'
+            ></menuitem>
+
+
+        <record id='view_tree_todo_task' model='ir.ui.view'>
+            <field name="name">To-Do Task Tree</field>
+            <field name="model">todo.task</field>
+            <field name="arch" type='xml'>
+                <tree colors='gray:is_done==True'>
+                    <field name="name"></field>
+                    <field name="is_done"></field>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id='view_filter_todo_task' model='ir.ui.view'>
+            <field name="name">To-Do Task Filter</field>
+            <field name="model">todo.task</field>
+            <field name="arch" type='xml'>
+                <search>
+                    <field name="name"></field>
+                    <filter string="Not Done" domain="[('is_done', '=' , False)]"></filter>
+                    <filter string="Done" domain="[('is_done', '=' , True)]"></filter>
+                </search>
+            </field>
+        </record>
+
+        <record id='view_form_todo_task' model='ir.ui.view'>
+            <field name='name'>To-do Task Form</field>
+            <field name='model'>todo.task</field>
+            <field name='arch' type='xml'>
+                <form>
+                    <header>
+                        <button name='do_toggle_done' type='object'
+                            string='Toggle Done' class='oe_highlight'></button>
+                        <button name='do_clear_done' type='object'
+                            string='Clear all done'></button>
+                    </header>
+                    <sheet>
+                        <group name="group_top">
+                            <group name="group_left">
+                                <field name='name'></field>
+                            </group>
+                            <group name="group_right">
+                                <field name='is_done'></field>
+                                <field name='active' readonly='1'></field>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>
